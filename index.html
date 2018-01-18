@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+  <title>Demo - Login manager autofill abuse</title>
+    <body>
+
+      <h4>Demo steps</h4>
+      <ol>
+        <li>Submit the following form with <b>fake credentials</b></li>
+        <li>Your browser will ask whether you want to save this login. Click "Save".</li>
+      </ol>
+
+    <script>
+      document.body.addEventListener('submit', function ajax(e){
+        e.preventDefault();
+        setTimeout(function(){
+            var parentNode = e.target.parentNode;
+            parentNode.removeChild(e.target);
+            history.replaceState({success:true}, 'title', "index.html");
+            var newLink = document.createElement('a');
+            newLink.href = 'logged.html';
+            newLink.innerHTML = 'Please save the password and CLICK HERE to continue the demo.';
+            parentNode.appendChild(newLink);
+        }, 1);
+      }, false);
+    </script>
+
+    <form action="endpoint.html" method="POST">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Fake Email address</label>
+        <input type="email" class="form-control" id="demo-email" aria-describedby="emailHelp" placeholder="Enter a fake email">
+        <small id="emailHelp" class="form-text text-muted">Please do not enter a real email address.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Fake Password</label>
+        <input type="password" class="form-control" id="demo-pwd" placeholder="Enter a fake password">
+        <small id="emailHelp" class="form-text text-muted">Please do not enter a real password.</small>
+      </div>
+      <div id='login'></div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </body>
+</html>
